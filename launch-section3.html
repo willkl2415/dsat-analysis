@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Launch Section 3</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 100px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <script>
+    function launchSection() {
+      const win = window.open("Section3/index.html", "section3Course", "width=1024,height=768");
+      const check = setInterval(() => {
+        if (win && win.closed) {
+          clearInterval(check);
+          window.location.href = "launch-section4.html";
+        }
+      }, 1000);
+    }
+  </script>
+</head>
+<body>
+  <h2>Ready to Launch Section 3</h2>
+  <p>Click the button below to open Section 3. When you're done, it will automatically continue to Section 4.</p>
+  <button onclick="launchSection()">Launch Section 3</button>
+</body>
+</html>
