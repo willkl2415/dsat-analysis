@@ -6,10 +6,6 @@
 <meta http-equiv="x-ua-compatible" content="IE=10">
 <title>TNA for Practitioners</title>
 <style type="text/css">#initialLoading{background:url(assets/htmlimages/loader.gif) no-repeat center center;background-color:#ffffff;position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;z-index:10010;}</style>
-
-"
-"
-
 <script>
 
 var deviceReady = false;
@@ -75,6 +71,9 @@ function initializeCP()
 			if(cp.UnloadActivties)
 				cp.UnloadActivties();
 			lCpExit();
+
+			// Redirect to main course page instead of launch screen
+			window.location.href = "https://willkl2415.github.io/dsat-analysis/";
 		};
 
 		if( window.CPYTAPINeeded )
@@ -103,63 +102,60 @@ function initializeCP()
 
 </script>
 
- </head>
+</head>
 <body onload="onBodyLoad()">
-		<div id='initialLoading'></div>
+	<div id='initialLoading'></div>
 <script>
-		(function()
-		{
-			if(document.documentMode < 9)
+(function()
+{
+	if(document.documentMode < 9)
+	{
+		document.body.innerHTML = "";
+		document.write("The content you are trying to view is not supported in the current Document Mode of Internet Explorer. Change the Document Mode to Internet Explorer 9 Standards and try to view the content again.<br>To change the Document Mode, press F12, click Document Mode: <current mode>, and then select Internet Explorer 9 Standards.");
+		return;
+	}
+	window.addEventListener("load",function() 
+	{
+		setTimeout(function() 
+		{					
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = 'assets/js/CPXHRLoader.js';
+			script.defer = 'defer';
+			script.onload = function()
 			{
-				document.body.innerHTML = "";
-				document.write("The content you are trying to view is not supported in the current Document Mode of Internet Explorer. Change the Document Mode to Internet Explorer 9 Standards and try to view the content again.<br>To change the Document Mode, press F12, click Document Mode: <current mode>, and then select Internet Explorer 9 Standards.");
-				return;
-			}
-			window.addEventListener("load",function() 
-			{
-				setTimeout(function() 
-				{					
-					var script = document.createElement('script');
-					script.type = 'text/javascript';
-					script.src = 'assets/js/CPXHRLoader.js';
-					script.defer = 'defer';
-					script.onload = function()
+				var lCSSLoaded = false;
+				var lJSLoaded = false;
+				function constructDIVs()
+				{
+					if(lCSSLoaded && lJSLoaded)
 					{
-						var lCSSLoaded = false;
-						var lJSLoaded = false;
-						function constructDIVs()
-						{
-							if(lCSSLoaded && lJSLoaded)
-							{
-								initializeCP();
-							}
-						}
-						cpXHRJSLoader.css('assets/css/CPLibraryAll.css',function() {
-							lCSSLoaded = true;
-							constructDIVs();
-						});
-						var lJSFiles = [  'assets/js/jquery-3.3.1.min.js','scormdriver.js','assets/js/CPM.js','assets/playbar/playbarScript.js' ];
-						cpXHRJSLoader.js(lJSFiles,function()
-						{
-							//console.log("js loaded");
-
-							var imagesJSONFiles = [ 'dr/imgmd.json' ];
-							cpXHRJSLoader.loadImagesJSON(imagesJSONFiles,function(imageToJSONPathMap){
-								cp.imageToJSONPathMap = imageToJSONPathMap;
-								var imageJSONFiles = [ 'dr/img1.json','dr/img2.json','dr/img3.json','dr/img4.json','dr/img5.json','dr/img6.json','dr/img7.json','dr/img8.json','dr/img9.json','dr/img10.json','dr/img11.json','dr/img12.json','dr/img13.json','dr/img14.json','dr/img15.json','dr/img16.json','dr/img17.json','dr/img18.json','dr/img19.json' ];
-								if(window.location.protocol.substr(0,4) == "file")
-									cpXHRJSLoader.preloadURLs(imageJSONFiles, constructDIVs);
-								lJSLoaded = true;
-								if(window.location.protocol.substr(0,4) != "file" || !imageJSONFiles.length)
-									constructDIVs();
-							});
-						});
+						initializeCP();
 					}
-					document.getElementsByTagName('head')[0].appendChild(script);
-				},1);
-			},false);
-		})();
-		
+				}
+				cpXHRJSLoader.css('assets/css/CPLibraryAll.css',function() {
+					lCSSLoaded = true;
+					constructDIVs();
+				});
+				var lJSFiles = [  'assets/js/jquery-3.3.1.min.js','scormdriver.js','assets/js/CPM.js','assets/playbar/playbarScript.js' ];
+				cpXHRJSLoader.js(lJSFiles,function()
+				{
+					var imagesJSONFiles = [ 'dr/imgmd.json' ];
+					cpXHRJSLoader.loadImagesJSON(imagesJSONFiles,function(imageToJSONPathMap){
+						cp.imageToJSONPathMap = imageToJSONPathMap;
+						var imageJSONFiles = [ 'dr/img1.json','dr/img2.json','dr/img3.json','dr/img4.json','dr/img5.json','dr/img6.json','dr/img7.json','dr/img8.json','dr/img9.json','dr/img10.json','dr/img11.json','dr/img12.json','dr/img13.json','dr/img14.json','dr/img15.json','dr/img16.json','dr/img17.json','dr/img18.json','dr/img19.json' ];
+						if(window.location.protocol.substr(0,4) == "file")
+							cpXHRJSLoader.preloadURLs(imageJSONFiles, constructDIVs);
+						lJSLoaded = true;
+						if(window.location.protocol.substr(0,4) != "file" || !imageJSONFiles.length)
+							constructDIVs();
+					});
+				});
+			}
+			document.getElementsByTagName('head')[0].appendChild(script);
+		},1);
+	},false);
+})();
 </script>
 <noscript style="text-align:center;font-size:24px;">Enable Javascript support in the browser.</noscript>
 </body>
